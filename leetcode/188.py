@@ -46,6 +46,8 @@ def maxProfitDP(k, prices):
     if prices == []:
         return 0
 
+    max_transactions = min(int(len(prices)/2), k)
+
     B = []
     S = []
     H = []
@@ -57,7 +59,7 @@ def maxProfitDP(k, prices):
         s_temp = []
         h_temp = []
         n_temp = []
-        for _ in range(0, k+1):
+        for _ in range(0, max_transactions+1):
             b_temp.append(0)
             s_temp.append(0)
             h_temp.append(0)
@@ -69,12 +71,12 @@ def maxProfitDP(k, prices):
 
     #Set profit when buying on first day, excluding profits when not buying at all
     #A situation does not exist to be holding or selling on the first day
-    for j in range(1,k+1):
+    for j in range(1,max_transactions+1):
         B[0][j] = prices[0]*-1
         S[0][j] = -math.inf
         H[0][j] = -math.inf
 
-    for j in range(1,k+1):
+    for j in range(1,max_transactions+1):
         for i in range(1, len(prices)):
             #We can only buy when we last sold or when we last did nothing
             B[i][j] = max(S[i-1][j-1], N[i-1][j-1]) - prices[i]
@@ -83,7 +85,7 @@ def maxProfitDP(k, prices):
             N[i][j] = max(S[i-1][j], N[i-1][j])
 
     max_profit = 0
-    for j in range(1,k+1):
+    for j in range(1,max_transactions+1):
         for i in range(0, len(prices)):
             max_profit = max(B[i][j],S[i][j],H[i][j],N[i][j], max_profit)
 
