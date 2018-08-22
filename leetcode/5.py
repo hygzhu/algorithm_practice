@@ -2,6 +2,8 @@
 Given a string s, find the longest palindromic substring in s
 """
 
+#Accepted solution
+#Time complexity: O(n^2) we iterate on every block of characters in the string and expand outwards checking if it is a palindrome
 #Iterate on each character block and expand outwards
 def longestPalindrome(s):
     
